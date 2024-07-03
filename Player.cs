@@ -11,12 +11,14 @@ namespace Vetores
         //Atributos
         private string _name;
         private int _score;
+        private TimeSpan _gameTime;
 
         //Métodos
         public Player(string name)
         {
             Name = name;
             _score = 0;
+            GameTime = TimeSpan.FromSeconds(0);
         }
         //propriedade
         public string Name
@@ -39,10 +41,20 @@ namespace Vetores
 
             get { return _score; }
         }
+        public TimeSpan GameTime
+        {
+            get { return _gameTime; }
+            set
+            {
+                _gameTime += value;
+            }
+        }
+
         public override string ToString()
         {
             return "Nome: " + Name +
-                "\nPontuação: " + Score;
+            "\nPontuação: " + Score +
+            $"\nTempo de Partida: {GameTime:hh\\:mm\\:ss}";
         }
     }
 }

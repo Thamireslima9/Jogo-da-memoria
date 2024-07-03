@@ -4,6 +4,7 @@ namespace Vetores
 {
     public class Program
     {
+
         public static void PrintMatrix (int[,] tela)
         {
             Console.WriteLine("   ");
@@ -27,6 +28,7 @@ namespace Vetores
         {
             int[,] jogo = new int[4, 4];
             int[,] tela = new int[4, 4];
+
             Console.WriteLine("Entre com o nome do Player 1:");
             String nomeP1 = Console.ReadLine();
             Console.WriteLine("Entre com o nome do Player 2:");
@@ -66,6 +68,9 @@ namespace Vetores
                 Console.WriteLine("{0} É A SUA VEZ!",
                 jogador == 1 ? p1.Name : p2.Name);
 
+                //Começa a contar o tempo.
+                DateTime begin = DateTime.Now;
+
                 int lin1;
                 int col1;
                 
@@ -85,6 +90,10 @@ namespace Vetores
                         col1 = int.Parse(Console.ReadLine());
                         col1--;
                     } while (col1 < 0 || col1 >= 4);
+
+                    if (tela[lin1, col1] != 0)
+                        Console.WriteLine("ERRO: VOCÊ JÁ ESCOLHEU ESTA POSIÇÃO!");
+
                 } while (tela[lin1, col1] != 0);
 
                 tela[lin1, col1] = jogo[lin1, col1];
@@ -109,7 +118,12 @@ namespace Vetores
                         col2 = int.Parse(Console.ReadLine());
                         col2--;
                     } while (col2 < 0 || col2 >= 4);
-                }  while (tela[lin2, col2] != 0);
+
+                    if (tela[lin1, col1] != 0)
+                        Console.WriteLine("ERRO: VOCÊ JÁ ESCOLHEU ESTA POSIÇÃO!");
+                
+            }  while (tela[lin2, col2] != 0);
+
 
                 tela[lin2, col2] = jogo[lin2, col2];
 
@@ -120,6 +134,13 @@ namespace Vetores
                 //Em caso de erro, precisamos voltar as posições para zero.
                 if (jogo[lin1, col1] != jogo[lin2, col2])
                 {
+                    TimeSpan timeSpan = DateTime.Now - begin;
+                    //Soma do tempo de partida.
+                    if (jogador == 1)
+                        p1.GameTime = timeSpan;
+                    else
+                        p2.GameTime = timeSpan;
+
                     //Trocar o jogador
                     jogador = (jogador % 2) + 1;
 
@@ -159,6 +180,7 @@ namespace Vetores
                 Console.WriteLine();//quebra linha
 
                 Console.WriteLine(p2.ToString());
+
 
                 Console.WriteLine("PARABÉNS, VOCÊ COMPLETOU O JOGO!");
             }
